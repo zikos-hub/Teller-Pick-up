@@ -2,28 +2,95 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Teller App</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
       padding: 20px;
+      margin: 0;
     }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
     .person {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin-bottom: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
     }
+
     .person input[type="text"] {
-      font-size: 1.1em;
+      font-size: 1em;
+      padding: 8px;
+      width: 160px;
+      max-width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       margin-bottom: 10px;
-      width: 80%;
     }
+
     .counter {
-      font-size: 2em;
-      margin: 10px 0;
+      font-size: 2.5em;
+      margin: 15px 0;
+      color: #34495e;
     }
-    button {
+
+    .btn {
+      font-size: 1.4em;
+      padding: 10px 20px;
       margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .plus {
+      background-color: #27ae60;
+      color: white;
+    }
+
+    .minus {
+      background-color: #c0392b;
+      color: white;
+    }
+
+    .reset {
+      background-color: #bdc3c7;
+      color: #2c3e50;
+    }
+
+    @media (max-width: 500px) {
+      .btn {
+        width: 90%;
+        margin: 8px auto;
+        display: block;
+      }
     }
   </style>
 </head>
@@ -31,25 +98,25 @@
 
 <h2>Naam Teller App</h2>
 
-<div id="container"></div>
+<div class="container" id="container"></div>
 
 <script>
   const maxPersons = 4;
   const container = document.getElementById('container');
+  const counters = new Array(maxPersons).fill(0);
 
   for (let i = 0; i < maxPersons; i++) {
-    container.innerHTML += `
+    const personHTML = `
       <div class="person" id="person-${i}">
-        <input type="text" id="name-${i}" placeholder="Naam persoon ${i + 1}">
+        <input type="text" id="name-${i}" maxlength="15" placeholder="Naam persoon ${i + 1}">
         <div class="counter" id="counter-${i}">0</div>
-        <button onclick="adjustCounter(${i}, 1)">+1</button>
-        <button onclick="adjustCounter(${i}, -1)">-1</button>
-        <button onclick="resetCounter(${i})">Reset</button>
+        <button class="btn plus" onclick="adjustCounter(${i}, 1)">+1</button>
+        <button class="btn minus" onclick="adjustCounter(${i}, -1)">-1</button>
+        <button class="btn reset" onclick="resetCounter(${i})">Reset</button>
       </div>
     `;
+    container.innerHTML += personHTML;
   }
-
-  const counters = [0, 0, 0, 0];
 
   function adjustCounter(index, value) {
     counters[index] += value;

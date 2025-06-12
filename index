@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Teller App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .person {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .person input[type="text"] {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      width: 80%;
+    }
+    .counter {
+      font-size: 2em;
+      margin: 10px 0;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Naam Teller App</h2>
+
+<div id="container"></div>
+
+<script>
+  const maxPersons = 4;
+  const container = document.getElementById('container');
+
+  for (let i = 0; i < maxPersons; i++) {
+    container.innerHTML += `
+      <div class="person" id="person-${i}">
+        <input type="text" id="name-${i}" placeholder="Naam persoon ${i + 1}">
+        <div class="counter" id="counter-${i}">0</div>
+        <button onclick="adjustCounter(${i}, 1)">+1</button>
+        <button onclick="adjustCounter(${i}, -1)">-1</button>
+        <button onclick="resetCounter(${i})">Reset</button>
+      </div>
+    `;
+  }
+
+  const counters = [0, 0, 0, 0];
+
+  function adjustCounter(index, value) {
+    counters[index] += value;
+    document.getElementById(`counter-${index}`).innerText = counters[index];
+  }
+
+  function resetCounter(index) {
+    counters[index] = 0;
+    document.getElementById(`counter-${index}`).innerText = counters[index];
+  }
+</script>
+
+</body>
+</html>
